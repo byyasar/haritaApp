@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'city_picker_from_map.dart';
+import 'package:flutter/services.dart';
+import 'package:kartal/kartal.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,60 +14,73 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      home: HomeView(),
+      home: homePage(),
       //theme: ThemeData.light(),
     );
   }
 }
 
-class HomeView extends StatefulWidget {
+// ignore: camel_case_types
+class homePage extends StatefulWidget {
+  const homePage({Key? key}) : super(key: key);
+
   @override
-  _HomeViewState createState() => _HomeViewState();
+  _homePageState createState() => _homePageState();
 }
 
-class _HomeViewState extends State<HomeView> {
-  City? selectedCity;
-  final GlobalKey<CityPickerMapState> _mapKey = GlobalKey();
+class _homePageState extends State<homePage> {
+  List _items = [];
+  var kitapData;
+  @override
+  void initState() {
+    super.initState();
+    oku();
+  }
 
+  Future<void> oku() async {
+    final String response =
+        await rootBundle.loadString('assets/data/kitap.json');
+    final isData = await json.decode(response);
+
+    setState(() {
+     _items = isData;
+    });
+  }
+// 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Selected City: ${selectedCity?.title ?? '(?)'}'),
-        actions: [
-          IconButton(
-              icon: Icon(Icons.delete, color: Colors.red),
-              onPressed: () {
-                _mapKey.currentState?.clearSelect();
-                setState(() {
-                  selectedCity = null;
-                });
-              })
-        ],
+        title: Text('Kitaplar'),
       ),
-      body: Center(
-        child: InteractiveViewer(
-          scaleEnabled: true,
-          panEnabled: true,
-          constrained: true,
-          child: CityPickerMap(
-            key: _mapKey,
-            width: double.infinity,
-            height: double.infinity,
-            map: Maps.TURKEY,
-            onChanged: (city) {
-              setState(() {
-                selectedCity = city;
-                print('seçilen şehir ' + city!.title.toString());
-              });
-            },
-            actAsToggle: true,
-            dotColor: Colors.orange, //haritadaki illerin noktası
-            selectedColor: Colors.lightBlueAccent,
-            strokeColor: Colors.purple, //harita çizgi rengi
-          ),
-        ),
-      ),
+      body: _items.isNullOrEmpty           ? Center(child: CircularProgressIndicator())
+          : Container(
+              color: Colors.white10,
+              child: ListView.builder(
+                  itemCount: _items.length,
+                  itemBuilder: (BuildContext ctxt, int index) {
+                    //var kitap = kitapData[index];
+                    return Card(
+                      margin: EdgeInsets.all(2),
+                      child: Column(
+                        children: [
+                          ListTile(
+                            leading: Text(_items[index]["kitapAdi"]),
+                            title: Text(
+                                _items[index]["yazar"]), //items[index]["resim"]
+                          ),
+                          Container(
+                            padding: context.paddingLow,
+                            height: context.dynamicHeight(0.3),
+                            child: Image.asset("assets/images/" +
+                                _items[index]["resim"] +
+                                ".jpg"),
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
+            ),
     );
   }
 }

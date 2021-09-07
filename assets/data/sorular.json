@@ -1,0 +1,28 @@
+[
+    {
+        "id": 1,
+        "image": "1.jpeg",
+        "bilgi": "kültürel miras falan filan",
+        "secenekler": {
+            "a": "Ayı",
+            "b": "Fil",
+            "c": "Arı",
+            "d": "Balık"
+        },
+        "cevap": "Ayı",
+        "sehir": "Adana"
+    },
+    {
+        "id": 2,
+        "image": "2.jpeg",
+        "bilgi": "kültürel miras falan filan2",
+        "secenekler": {
+            "a": "Ayı",
+            "b": "Fil",
+            "c": "Arı",
+            "d": "Balık"
+        },
+        "cevap": "Ayı",
+        "sehir": "Adana"
+    }
+]
