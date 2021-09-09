@@ -1,86 +1,103 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:kartal/kartal.dart';
+import 'package:haritaapp/src/constant.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MainApp());
 }
 
-class MyApp extends StatelessWidget {
+class MainApp extends StatelessWidget {
+  const MainApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      home: homePage(),
+      home: MainPage(),
       //theme: ThemeData.light(),
     );
   }
 }
 
-// ignore: camel_case_types
-class homePage extends StatefulWidget {
-  const homePage({Key? key}) : super(key: key);
+class MainPage extends StatefulWidget {
+  MainPage({Key? key}) : super(key: key);
 
   @override
-  _homePageState createState() => _homePageState();
+  _MainPageState createState() => _MainPageState();
 }
 
-class _homePageState extends State<homePage> {
-  List _items = [];
-  var kitapData;
-  @override
-  void initState() {
-    super.initState();
-    oku();
-  }
-
-  Future<void> oku() async {
-    final String response =
-        await rootBundle.loadString('assets/data/kitap.json');
-    final isData = await json.decode(response);
-
-    setState(() {
-     _items = isData;
-    });
-  }
-// 
+class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Kitaplar'),
-      ),
-      body: _items.isNullOrEmpty           ? Center(child: CircularProgressIndicator())
-          : Container(
-              color: Colors.white10,
-              child: ListView.builder(
-                  itemCount: _items.length,
-                  itemBuilder: (BuildContext ctxt, int index) {
-                    //var kitap = kitapData[index];
-                    return Card(
-                      margin: EdgeInsets.all(2),
-                      child: Column(
-                        children: [
-                          ListTile(
-                            leading: Text(_items[index]["kitapAdi"]),
-                            title: Text(
-                                _items[index]["yazar"]), //items[index]["resim"]
-                          ),
-                          Container(
-                            padding: context.paddingLow,
-                            height: context.dynamicHeight(0.3),
-                            child: Image.asset("assets/images/" +
-                                _items[index]["resim"] +
-                                ".jpg"),
-                          ),
-                        ],
-                      ),
-                    );
-                  }),
-            ),
+      appBar: _appBar,
+      body: _container,
     );
   }
+
+  Container get _container {
+    return Container(
+      color: Colors.blueAccent.shade100,
+      child: Column(
+        children: [
+          Expanded(
+            flex: 8,
+            child: Center(
+              child: _imageContainer,
+            ),
+          ),
+          Expanded(
+            flex: 12,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Text(
+                  Constants.INFO,
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                ),
+              ),
+            ),
+          ),
+          Spacer(flex: 1),
+          Expanded(
+              flex: 1,
+              child: Container(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.red, // background
+                    onPrimary: Colors.white, // foreground
+                  ),
+                  onPressed: () {},
+                  child: Text('Ben Bilirim'),
+                ),
+              )),
+          Spacer(flex: 1),
+        ],
+      ),
+    );
+  }
+
+  Container get _imageContainer {
+    return Container(
+      margin: EdgeInsets.all(20),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: Offset(0, 2),
+          ),
+        ],
+        borderRadius: BorderRadius.circular(10.0),
+        color: Colors.white,
+      ),
+      height: 300,
+      child: Image.asset("assets/images/" + "istanbul" + ".jpg"),
+    );
+  }
+
+  get _appBar => AppBar(title: Text('Kültürel Mirasın Adı ne?'));
 }
