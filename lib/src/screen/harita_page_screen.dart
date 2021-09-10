@@ -1,31 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:haritaapp/city_picker_from_map.dart';
 import 'city_picker_from_map.dart';
 
-void main() {
-  runApp(MyApp());
-}
+class HaritaPage extends StatefulWidget {
+  HaritaPage({Key? key}) : super(key: key);
 
-class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      home: HomeView(),
-      //theme: ThemeData.light(),
-    );
-  }
+  _HaritaPageState createState() => _HaritaPageState();
 }
 
-class HomeView extends StatefulWidget {
-  @override
-  _HomeViewState createState() => _HomeViewState();
-}
-
-class _HomeViewState extends State<HomeView> {
+class _HaritaPageState extends State<HaritaPage> {
   City? selectedCity;
   final GlobalKey<CityPickerMapState> _mapKey = GlobalKey();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
