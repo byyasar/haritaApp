@@ -71,7 +71,8 @@ Future<void> _showMyDialog(BuildContext context, bool dogrumu) async {
             dogrumu == true ? const Text('Tebrikler') : const Text('Üzgünüm'),
         content: SingleChildScrollView(
           child: ListBody(
-            children: const <Widget>[
+            children: <Widget>[
+              dogrumu == true ? Text("Tebrikler") : Text("Üzgünüm"),
               //Text(dogrumu==true?'Tebrikler':'Üzgünüm'),
             ],
           ),

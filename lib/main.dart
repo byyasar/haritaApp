@@ -16,6 +16,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Soru>? _testsorular;
     String? _sehir;
+    int? _rastgelesayi;
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -30,7 +31,10 @@ class MainApp extends StatelessWidget {
         "/harita": (context) => HaritaPage(
               cevap: _sehir,
             ),
-        "/secenekler": (context) => SeceneklerPage(testSorular: _testsorular),
+        "/secenekler": (context) => SeceneklerPage(
+              testSorular: _testsorular,
+              rastgelesayi: _rastgelesayi,
+            ),
       },
     );
   }
