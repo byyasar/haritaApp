@@ -1,5 +1,8 @@
+import 'dart:convert';
+import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:haritaapp/src/constant.dart';
+import 'package:flutter/services.dart';
+import 'package:haritaapp/src/screen/secenekler_page.dart';
 
 class SoruPage extends StatefulWidget {
   SoruPage({Key? key}) : super(key: key);
@@ -9,16 +12,42 @@ class SoruPage extends StatefulWidget {
 }
 
 class _SoruPageState extends State<SoruPage> {
+  List sorular = [];
+  int? rastgelesayi;
+  int? sorusayisi;
+
+  @override
+  void initState() {
+    super.initState();
+    sorulariOku();
+  }
+
+  Future<void> sorulariOku() async {
+    final String response =
+        await rootBundle.loadString('assets/data/sorular.json');
+    final isData = await json.decode(response);
+
+    setState(() {
+      sorular = isData;
+      sorusayisi = sorular.length;
+      //print("sorusayısı ${sorusayisi!}");
+      rastgelesayi = Random().nextInt(sorusayisi!);
+      print("random ${rastgelesayi!}");
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _appBar,
-      body: _container,
+      appBar: _appBar(context, sorular, rastgelesayi),
+      body: _container(context, sorular, rastgelesayi),
     );
   }
 }
 
-Container get _container {
+Container _container(BuildContext context, List? sorular, int? rastgelesayi) {
+  print("gelensorular ${sorular!.length}");
+  print("gelen raste ${rastgelesayi!}");
   return Container(
     color: Colors.blueAccent.shade100,
     child: Column(
@@ -26,7 +55,7 @@ Container get _container {
         Expanded(
           flex: 8,
           child: Center(
-            child: _imageContainer,
+            child: _imageContainer(sorular, rastgelesayi),
           ),
         ),
         Expanded(
@@ -36,7 +65,7 @@ Container get _container {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Text(
-                Constants.INFO,
+                sorular[rastgelesayi]["bilgi"],
                 style: TextStyle(color: Colors.white, fontSize: 18),
               ),
             ),
@@ -51,7 +80,15 @@ Container get _container {
                   primary: Colors.red, // background
                   onPrimary: Colors.white, // foreground
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  print("----");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            SeceneklerPage(testSorular: sorular,rastgelesayi:rastgelesayi)),
+                  );
+                },
                 child: Text('Ben Bilirim'),
               ),
             )),
@@ -61,7 +98,7 @@ Container get _container {
   );
 }
 
-Container get _imageContainer {
+Container _imageContainer(List? sorular, int? rastgelesayi) {
   return Container(
     margin: EdgeInsets.all(20),
     width: double.infinity,
@@ -78,8 +115,23 @@ Container get _imageContainer {
       color: Colors.white,
     ),
     height: 300,
-    child: Image.asset("assets/images/" + "istanbul" + ".jpg"),
+    child: Image.asset("assets/images/${sorular![rastgelesayi!]["image"]}"),
   );
 }
 
-get _appBar => AppBar(title: Text('Kültürel Mirasın Adı ne?'));
+_appBar(BuildContext context, List? sorular, int? rastgelesayi) => AppBar(
+      title: Text('Kültürel Mirasın Adı ne?'),
+      actions: [
+        IconButton(
+          icon: Icon(Icons.refresh),
+          color: Colors.white,
+          highlightColor: Colors.red,
+          tooltip: 'Burası Talimat Yazısı',
+          onPressed: () {
+            //print("Butona 1 Kez Tıklandı");
+            rastgelesayi = Random().nextInt(sorular!.length);
+            print("random ${rastgelesayi!}");
+          },
+        ),
+      ],
+    );

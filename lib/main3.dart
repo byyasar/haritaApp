@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kartal/kartal.dart';
@@ -28,6 +27,7 @@ class homePage extends StatefulWidget {
   _homePageState createState() => _homePageState();
 }
 
+// ignore: camel_case_types
 class _homePageState extends State<homePage> {
   List _items = [];
   var kitapData;

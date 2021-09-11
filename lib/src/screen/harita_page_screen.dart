@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:haritaapp/city_picker_from_map.dart';
-import 'city_picker_from_map.dart';
 
 class HaritaPage extends StatefulWidget {
-  HaritaPage({Key? key}) : super(key: key);
+  String? cevap;
+  HaritaPage({Key? key, this.cevap}) : super(key: key);
 
   @override
   _HaritaPageState createState() => _HaritaPageState();
@@ -14,6 +14,7 @@ class _HaritaPageState extends State<HaritaPage> {
   final GlobalKey<CityPickerMapState> _mapKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
+    //print("Gelen şehir ${widget.cevap}");
     return Scaffold(
       appBar: AppBar(
         title: Text('Selected City: ${selectedCity?.title ?? '(?)'}'),
@@ -39,9 +40,14 @@ class _HaritaPageState extends State<HaritaPage> {
             height: double.infinity,
             map: Maps.TURKEY,
             onChanged: (city) {
+              //print("Gelen şehir ${widget.cevap}");
               setState(() {
                 selectedCity = city;
                 print('seçilen şehir ' + city!.title.toString());
+                print("Gelen şehir ${widget.cevap}");
+                "${widget.cevap}" == city.title.toString()
+                    ? _showMyDialog(context, true)
+                    : _showMyDialog(context, false);
               });
             },
             actAsToggle: true,
@@ -53,4 +59,32 @@ class _HaritaPageState extends State<HaritaPage> {
       ),
     );
   }
+}
+
+Future<void> _showMyDialog(BuildContext context, bool dogrumu) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title:
+            dogrumu == true ? const Text('Tebrikler') : const Text('Üzgünüm'),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: const <Widget>[
+              //Text(dogrumu==true?'Tebrikler':'Üzgünüm'),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('Tamam'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

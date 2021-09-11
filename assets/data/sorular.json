@@ -1,28 +1,41 @@
 [
     {
         "id": 1,
-        "image": "1.jpeg",
+        "image": "1984.jpg",
         "bilgi": "kültürel miras falan filan",
-        "secenekler": {
-            "a": "Ayı",
-            "b": "Fil",
-            "c": "Arı",
-            "d": "Balık"
-        },
-        "cevap": "Ayı",
+        "secenekler": [
+            "Ayı1",
+            "Fil1",
+            "Arı1",
+            "Balık1"
+        ],
+        "cevap": "Ayı1",
         "sehir": "Adana"
     },
     {
         "id": 2,
-        "image": "2.jpeg",
+        "image": "hayvanciftligi.jpg",
         "bilgi": "kültürel miras falan filan2",
-        "secenekler": {
-            "a": "Ayı",
-            "b": "Fil",
-            "c": "Arı",
-            "d": "Balık"
-        },
-        "cevap": "Ayı",
-        "sehir": "Adana"
+        "secenekler": [
+            "Ayı2",
+            "Fil2",
+            "Arı2",
+            "Balık2"
+        ],
+        "cevap": "Ayı2",
+        "sehir": "Bursa"
+    },
+    {
+        "id": 3,
+        "image": "korluk.jpg",
+        "bilgi": "kültürel miras falan filan2",
+        "secenekler": [
+            "Ayı3",
+            "Fil3",
+            "Arı3",
+            "Balık3"
+        ],
+        "cevap": "Ayı3",
+        "sehir": "Istanbul"
     }
 ]
