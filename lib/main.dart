@@ -23,7 +23,7 @@ class MainApp extends StatelessWidget {
       title: 'Flutter Demo',
       //home: MainPage(),
       //theme: ThemeData.light(),
-      initialRoute: "/soru",
+      initialRoute: "/",
       routes: {
         "/": (context) => AnaPage(),
         "/soru": (context) => SoruPage(),

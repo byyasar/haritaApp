@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:haritaapp/src/screen/secenekler_page.dart';
+import 'package:haritaapp/src/screen/harita_page_screen.dart';
+import 'package:haritaapp/src/widgets/custom_buton.dart';
+import 'package:kartal/kartal.dart';
 
 class SoruPage extends StatefulWidget {
   SoruPage({Key? key}) : super(key: key);
@@ -40,7 +42,9 @@ class _SoruPageState extends State<SoruPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appBar(context, sorular, rastgelesayi),
-      body: _container(context, sorular, rastgelesayi),
+      body: sorular.length == 0
+          ? Center(child: CircularProgressIndicator())
+          : _container(context, sorular, rastgelesayi),
     );
   }
 }
@@ -48,73 +52,108 @@ class _SoruPageState extends State<SoruPage> {
 Container _container(BuildContext context, List? sorular, int? rastgelesayi) {
   print("gelensorular ${sorular!.length}");
   print("gelen raste ${rastgelesayi!}");
+
   return Container(
-    color: Colors.blueAccent.shade100,
-    child: Column(
-      children: [
-        Expanded(
-          flex: 8,
-          child: Center(
-            child: _imageContainer(sorular, rastgelesayi),
+    //color: Colors.blueAccent.shade100,
+    child: Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width: context.dynamicWidth(.4),
+            child: soltaraf(context, sorular, rastgelesayi),
           ),
-        ),
-        Expanded(
-          flex: 12,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Text(
-                sorular[rastgelesayi]["bilgi"],
-                style: TextStyle(color: Colors.white, fontSize: 18),
-              ),
-            ),
+          Container(
+            width: context.dynamicWidth(.4),
+            child: sagtaraf(context, sorular, rastgelesayi),
           ),
-        ),
-        Spacer(flex: 1),
-        Expanded(
-            flex: 1,
-            child: Container(
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.red, // background
-                  onPrimary: Colors.white, // foreground
-                ),
-                onPressed: () {
-                  print("----");
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            SeceneklerPage(testSorular: sorular,rastgelesayi:rastgelesayi)),
-                  );
-                },
-                child: Text('Ben Bilirim'),
-              ),
-            )),
-        Spacer(flex: 1),
-      ],
+          SizedBox(
+            width: context.dynamicWidth(.05),
+          ),
+        ],
+      ),
     ),
   );
 }
 
-Container _imageContainer(List? sorular, int? rastgelesayi) {
+sagtaraf(BuildContext context, List testSorular, int rastgelesayi) {
+  return Center(
+    child: ListView.builder(
+      shrinkWrap: true,
+      itemCount: testSorular[rastgelesayi]["secenekler"].length,
+      itemBuilder: (BuildContext context, int i) => Container(
+        height: 80,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: ButtonWidget(
+              butonIcon: Icon(Icons.info, color: Colors.white),
+              butonText: testSorular[rastgelesayi]["secenekler"][i].toString(),
+              onPressed: () {
+                print("cevap seçenek ${testSorular[rastgelesayi]["cevap"]}");
+                print(
+                    "cevap seçenek ${testSorular[rastgelesayi]["secenekler"][i]}");
+                print(i);
+                testSorular[rastgelesayi]["cevap"] ==
+                        testSorular[rastgelesayi]["secenekler"][i]
+                    ? Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HaritaPage(
+                            cevap: testSorular[rastgelesayi]["sehir"],
+                          ),
+                        ),
+                      )
+                    : print("yanlış seçenek");
+              }),
+        ),
+      ),
+    ),
+  );
+}
+
+soltaraf(BuildContext context, List sorular, int rastgelesayi) {
+  return Column(
+    children: [
+      Expanded(
+        flex: 12,
+        child: _imageContainer(context, sorular, rastgelesayi),
+      ),
+      Spacer(flex: 1),
+      Expanded(
+        flex: 8,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: Text(
+              sorular[rastgelesayi]["bilgi"],
+              style: TextStyle(color: Colors.black, fontSize: 20),
+            ),
+          ),
+        ),
+      ),
+    ],
+  );
+}
+
+Container _imageContainer(
+    BuildContext context, List? sorular, int? rastgelesayi) {
   return Container(
-    margin: EdgeInsets.all(20),
+    margin: EdgeInsets.all(5),
     width: double.infinity,
     decoration: BoxDecoration(
       boxShadow: [
         BoxShadow(
           color: Colors.grey.withOpacity(0.5),
-          spreadRadius: 5,
-          blurRadius: 7,
+          spreadRadius: 2,
+          blurRadius: 2,
           offset: Offset(0, 2),
         ),
       ],
       borderRadius: BorderRadius.circular(10.0),
       color: Colors.white,
     ),
-    height: 300,
     child: Image.asset("assets/images/${sorular![rastgelesayi!]["image"]}"),
   );
 }

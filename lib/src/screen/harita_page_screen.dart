@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:haritaapp/city_picker_from_map.dart';
+import 'package:haritaapp/src/screen/ana_page_screen.dart';
+import 'package:kartal/kartal.dart';
 
 class HaritaPage extends StatefulWidget {
   String? cevap;
@@ -17,7 +19,7 @@ class _HaritaPageState extends State<HaritaPage> {
     //print("Gelen şehir ${widget.cevap}");
     return Scaffold(
       appBar: AppBar(
-        title: Text('Selected City: ${selectedCity?.title ?? '(?)'}'),
+        title: Text('Seçilen Şehir: ${selectedCity?.title ?? '(?)'}'),
         actions: [
           IconButton(
               icon: Icon(Icons.delete, color: Colors.red),
@@ -26,34 +28,47 @@ class _HaritaPageState extends State<HaritaPage> {
                 setState(() {
                   selectedCity = null;
                 });
+              }),
+          IconButton(
+              icon: Icon(Icons.home, color: Colors.white),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AnaPage()),
+                );
               })
         ],
       ),
-      body: Center(
-        child: InteractiveViewer(
-          scaleEnabled: true,
-          panEnabled: true,
-          constrained: true,
-          child: CityPickerMap(
-            key: _mapKey,
-            width: double.infinity,
-            height: double.infinity,
-            map: Maps.TURKEY,
-            onChanged: (city) {
-              //print("Gelen şehir ${widget.cevap}");
-              setState(() {
-                selectedCity = city;
-                print('seçilen şehir ' + city!.title.toString());
-                print("Gelen şehir ${widget.cevap}");
-                "${widget.cevap}" == city.title.toString()
-                    ? _showMyDialog(context, true)
-                    : _showMyDialog(context, false);
-              });
-            },
-            actAsToggle: true,
-            dotColor: Colors.orange, //haritadaki illerin noktası
-            selectedColor: Colors.lightBlueAccent,
-            strokeColor: Colors.purple, //harita çizgi rengi
+      body: Container(
+        //color: Colors.green,
+        height: context.dynamicHeight(1),
+        width: context.dynamicWidth(1),
+        child: Center(
+          child: InteractiveViewer(
+            scaleEnabled: true,
+            panEnabled: true,
+            constrained: true,
+            child: CityPickerMap(
+              key: _mapKey,
+              width: double.infinity,
+              height: double.infinity,
+              map: Maps.TURKEY,
+              onChanged: (city) {
+                //print("Gelen şehir ${widget.cevap}");
+                setState(() {
+                  selectedCity = city;
+                  print('seçilen şehir ' + city!.title.toString());
+                  print("Gelen şehir ${widget.cevap}");
+                  "${widget.cevap}" == city.title.toString()
+                      ? _showMyDialog(context, true)
+                      : _showMyDialog(context, false);
+                });
+              },
+              actAsToggle: true,
+              dotColor: Colors.orange, //haritadaki illerin noktası
+              selectedColor: Colors.lightBlueAccent,
+              strokeColor: Colors.purple, //harita çizgi rengi
+            ),
           ),
         ),
       ),
@@ -72,8 +87,9 @@ Future<void> _showMyDialog(BuildContext context, bool dogrumu) async {
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
-              dogrumu == true ? Text("Tebrikler") : Text("Üzgünüm"),
-              //Text(dogrumu==true?'Tebrikler':'Üzgünüm'),
+              dogrumu == true
+                  ? Text("Doğru cevap.")
+                  : Text("Lütfen tekrar deneyin."),
             ],
           ),
         ),

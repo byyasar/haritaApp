@@ -41,7 +41,7 @@ class ButtonWidget extends StatelessWidget {
           butonIcon!,
           Text(
             butonText!,
-            style: TextStyle(fontSize: 18, color: butonTextColor),
+            style: TextStyle(fontSize: 24, color: butonTextColor),
           ),
           Opacity(opacity: 0, child: butonIcon),
         ],
