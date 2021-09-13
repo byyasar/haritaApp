@@ -38,14 +38,36 @@ class _SoruPageState extends State<SoruPage> {
     });
   }
 
+  get yenile {
+    setState(() {
+      rastgelesayi = Random().nextInt(sorular.length);
+      print("random ${rastgelesayi!}");
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _appBar(context, sorular, rastgelesayi),
+      floatingActionButton: _floatingActionButton,
+      appBar: _appBar(context),
       body: sorular.length == 0
           ? Center(child: CircularProgressIndicator())
           : _container(context, sorular, rastgelesayi),
     );
+  }
+
+  get _floatingActionButton {
+    return FloatingActionButton(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("Yenile"),
+            Icon(Icons.refresh),
+          ],
+        ),
+        onPressed: () {
+          yenile;
+        });
   }
 }
 
@@ -158,19 +180,7 @@ Container _imageContainer(
   );
 }
 
-_appBar(BuildContext context, List? sorular, int? rastgelesayi) => AppBar(
-      title: Text('Kültürel Mirasın Adı ne?'),
-      actions: [
-        IconButton(
-          icon: Icon(Icons.refresh),
-          color: Colors.white,
-          highlightColor: Colors.red,
-          tooltip: 'Burası Talimat Yazısı',
-          onPressed: () {
-            //print("Butona 1 Kez Tıklandı");
-            rastgelesayi = Random().nextInt(sorular!.length);
-            print("random ${rastgelesayi!}");
-          },
-        ),
-      ],
-    );
+_appBar(
+  BuildContext context,
+) =>
+    AppBar(title: Text('Kültürel Mirasın Adı ne?'));
