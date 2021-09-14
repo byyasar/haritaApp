@@ -37,19 +37,18 @@ class SizeController {
     double width = _mapArea.maxX! - _mapArea.minX!;
     double height = _mapArea.maxY! - _mapArea.minY!;
 
+    //mapSize = Size(width, height);
     mapSize = Size(width, height);
   }
 
   double calculateScale(Size? containerSize) {
-    if (containerSize == null)
-      return 1.0;
+    if (containerSize == null) return 1.0;
 
     // Aspect Ratio
     double newWidth = containerSize.width, newHeight = containerSize.height;
     if (containerSize.width > containerSize.height) {
-      newHeight = 1 /(mapSize.aspectRatio / containerSize.width);
-    }
-    else {
+      newHeight = 1 / (mapSize.aspectRatio / containerSize.width);
+    } else {
       newHeight = containerSize.width / mapSize.aspectRatio;
     }
     containerSize = Size(newWidth, newHeight);
@@ -59,8 +58,8 @@ class SizeController {
     double scale2 = containerSize.height / mapSize.height;
     double mapScale = scale1 > scale2 ? scale1 : scale2;
 
-    return mapScale;
+    return mapScale; //yakınlaştırmak için 1.9 ile çarptım
   }
-  
-  double inverseOfScale(double scale) => 1.0/scale;
+
+  double inverseOfScale(double scale) => 1.0 / scale;
 }

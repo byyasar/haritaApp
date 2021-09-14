@@ -109,7 +109,8 @@ sagtaraf(BuildContext context, List testSorular, int rastgelesayi) {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: ButtonWidget(
-              butonIcon: Icon(Icons.info, color: Colors.white),
+              butonColor: Colors.blueAccent,
+              butonIcon: Icon(Icons.circle, color: Colors.white),
               butonText: testSorular[rastgelesayi]["secenekler"][i].toString(),
               onPressed: () {
                 print("cevap seçenek ${testSorular[rastgelesayi]["cevap"]}");
@@ -183,4 +184,4 @@ Container _imageContainer(
 _appBar(
   BuildContext context,
 ) =>
-    AppBar(title: Text('Kültürel Mirasın Adı ne?'));
+    AppBar(title: Text('Kültürel mirasın adı ne?'));

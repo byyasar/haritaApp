@@ -145,7 +145,7 @@ class Maps {
   static const TIBET = 'tibet.svg';
   static const TRINIDAD_AND_TOBAGO = 'trinidadAndTobago.svg';
   static const TUNISIA = 'tunisia.svg';
-  static const TURKEY = 'turkey.svg';
+  static const TURKEY = 'turkey2.svg';
   static const TURKMENISTAN = 'turkmenistan.svg';
   static const UGANDA = 'uganda.svg';
   static const UKRAINE = 'ukraine.svg';

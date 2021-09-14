@@ -23,7 +23,8 @@ class CityPickerMap extends StatefulWidget {
       this.strokeColor,
       this.selectedColor,
       this.dotColor,
-      this.actAsToggle}) : super(key: key);
+      this.actAsToggle})
+      : super(key: key);
 
   @override
   CityPickerMapState createState() => CityPickerMapState();
@@ -39,7 +40,7 @@ class CityPickerMapState extends State<CityPickerMap> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_){
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
       _loadCityList();
     });
   }
@@ -49,7 +50,8 @@ class CityPickerMapState extends State<CityPickerMap> {
     _cityList.clear();
     setState(() {
       _cityList.addAll(list);
-      mapSize = _sizeController.mapSize;
+      mapSize = _sizeController.mapSize *
+          1.8; // ANCHOR buradan harita scale ediliyor.
     });
   }
 
@@ -76,6 +78,7 @@ class CityPickerMapState extends State<CityPickerMap> {
           : _useButton(city),
       child: CustomPaint(
         child: Container(
+          //color: Colors.yellow,
           width: widget.width ?? double.infinity,
           height: widget.height ?? double.infinity,
           constraints: BoxConstraints(

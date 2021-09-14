@@ -20,7 +20,8 @@ class AnaPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                "Kültürel miraslarımız uygulamasına hoş geldiniz.",
+                "Kültürel miraslarımız uygulamasına hoş geldiniz.\n Ne? Nerede? hazır mısın?",
+                textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 36),
               ),
             ),
@@ -30,6 +31,7 @@ class AnaPage extends StatelessWidget {
               width: 300,
               child: ButtonWidget(
                 butonText: "Başlayalım",
+                butonColor: Colors.blueAccent,
                 radius: 10,
                 butonIcon: Icon(
                   Icons.star_outline,

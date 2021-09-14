@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:haritaapp/city_picker_from_map.dart';
 import 'package:haritaapp/src/screen/ana_page_screen.dart';
@@ -19,7 +20,13 @@ class _HaritaPageState extends State<HaritaPage> {
     //print("Gelen şehir ${widget.cevap}");
     return Scaffold(
       appBar: AppBar(
-        title: Text('Seçilen Şehir: ${selectedCity?.title ?? '(?)'}'),
+        title: Row(
+          children: [
+            Text('Kültürel mirasımız hangi şehirde?'),
+            Text(' ---> '),
+            Text('Seçilen Şehir: ${selectedCity?.title ?? '(?)'}'),
+          ],
+        ),
         actions: [
           IconButton(
               icon: Icon(Icons.delete, color: Colors.red),
@@ -40,14 +47,15 @@ class _HaritaPageState extends State<HaritaPage> {
         ],
       ),
       body: Container(
-        //color: Colors.green,
+        alignment: Alignment.center,
         height: context.dynamicHeight(1),
         width: context.dynamicWidth(1),
-        child: Center(
-          child: InteractiveViewer(
-            scaleEnabled: true,
-            panEnabled: true,
-            constrained: true,
+        child: InteractiveViewer(
+          scaleEnabled: true,
+          panEnabled: true,
+          constrained: true,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(10, 60, 10, 10),
             child: CityPickerMap(
               key: _mapKey,
               width: double.infinity,
@@ -84,6 +92,7 @@ Future<void> _showMyDialog(BuildContext context, bool dogrumu) async {
       return AlertDialog(
         title:
             dogrumu == true ? const Text('Tebrikler') : const Text('Üzgünüm'),
+        backgroundColor: dogrumu == true ? Colors.white : Colors.red,
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
