@@ -22,17 +22,19 @@ class AnaPage extends StatelessWidget {
               child: Text(
                 "Kültürel miraslarımız uygulamasına hoş geldiniz.\n Ne? Nerede? hazır mısın?",
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 36),
+                style: TextStyle(fontSize: 24),
               ),
             ),
             SizedBox(height: 40),
             Container(
               //color: Colors.white,
-              width: 300,
+              //width: 300,
               child: ButtonWidget(
                 butonText: "Başlayalım",
                 butonColor: Colors.blueAccent,
+                ebat: Size(220, 30),
                 radius: 10,
+                fontsize: 24,
                 butonIcon: Icon(
                   Icons.star_outline,
                   color: Colors.white,
