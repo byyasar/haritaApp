@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:haritaapp/city_picker_from_map.dart';
 import 'package:haritaapp/src/screen/ana_page_screen.dart';
 import 'package:kartal/kartal.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class HaritaPage extends StatefulWidget {
   String? cevap;
@@ -67,9 +68,13 @@ class _HaritaPageState extends State<HaritaPage> {
                   selectedCity = city;
                   print('seçilen şehir ' + city!.title.toString());
                   print("Gelen şehir ${widget.cevap}");
-                  "${widget.cevap}" == city.title.toString()
-                      ? _showMyDialog(context, true)
-                      : _showMyDialog(context, false);
+                  if ("${widget.cevap}" == city.title.toString()) {
+                    sesCal(true);
+                    _showMyDialog(context, true);
+                  } else {
+                    sesCal(false);
+                    _showMyDialog(context, false);
+                  }
                 });
               },
               actAsToggle: true,
@@ -82,6 +87,10 @@ class _HaritaPageState extends State<HaritaPage> {
       ),
     );
   }
+}
+Future<void> sesCal(bool durum) async{
+  AudioCache player = AudioCache(prefix: 'assets/sounds/');
+   durum == true ?await player.play('alkis.mp3') : await player.play('yanlis.mp3');
 }
 
 Future<void> _showMyDialog(BuildContext context, bool dogrumu) async {

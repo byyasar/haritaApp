@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:haritaapp/src/screen/ana_page_screen.dart';
 import 'package:haritaapp/src/screen/harita_page_screen.dart';
+import 'package:haritaapp/src/screen/ses_cal.dart';
 import 'package:haritaapp/src/screen/soru_page_screen.dart';
 
 void main() {
@@ -18,12 +19,13 @@ class MainApp extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Kültürel Miralarımı',
+      title: 'Kültürel Miralarımız',
       //home: MainPage(),
       //theme: ThemeData.light(),
       initialRoute: "/",
       routes: {
         "/": (context) => AnaPage(),
+        "/sese": (context) => MyApp(),
         "/soru": (context) => SoruPage(),
         //"/secim": (context) => MainPage(),
         "/harita": (context) => HaritaPage(

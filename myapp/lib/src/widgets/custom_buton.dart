@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class ButtonWidget extends StatelessWidget {
   final String? butonText;
   final Color? butonColor;
@@ -16,14 +17,14 @@ class ButtonWidget extends StatelessWidget {
   const ButtonWidget({
     Key? key,
     @required this.butonText,
-    this.butonColor: Colors.red,
-    this.butonTextColor: Colors.white,
-    this.radius: 10,
-    this.yukseklik: 32,
+    this.butonColor= Colors.red,
+    this.butonTextColor= Colors.white,
+    this.radius= 10,
+    this.yukseklik=32,
     this.fontsize,
     this.butonIcon,
     this.focusNode,
-    this.disableColor: Colors.brown,
+    this.disableColor=Colors.brown,
     this.onPressed,
     this.ebat,
   })  : assert(butonText != null),

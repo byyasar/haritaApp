@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:haritaapp/src/screen/harita_page_screen.dart';
@@ -127,17 +128,21 @@ sagtaraf(BuildContext context, List testSorular, int rastgelesayi) {
                 print(
                     "cevap seçenek ${testSorular[rastgelesayi]["secenekler"][i]}");
                 print(i);
-                testSorular[rastgelesayi]["cevap"] ==
-                        testSorular[rastgelesayi]["secenekler"][i]
-                    ? Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => HaritaPage(
-                            cevap: testSorular[rastgelesayi]["sehir"],
-                          ),
-                        ),
-                      )
-                    : _showMyDialog(context, false);
+                if (testSorular[rastgelesayi]["cevap"] ==
+                    testSorular[rastgelesayi]["secenekler"][i]) {
+                  sesCal(true);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HaritaPage(
+                        cevap: testSorular[rastgelesayi]["sehir"],
+                      ),
+                    ),
+                  );
+                } else {sesCal(false);
+                  _showMyDialog(context, false);
+                  
+                }
               }),
         ),
       ),
@@ -195,6 +200,11 @@ _appBar(
   BuildContext context,
 ) =>
     AppBar(title: Text('Kültürel mirasın adı ne?'));
+
+Future<void> sesCal(bool durum) async{
+  AudioCache player = AudioCache(prefix: 'assets/sounds/');
+   durum == true ?await player.play('dogru.mp3') : await player.play('yanlis.mp3');
+}
 
 Future<void> _showMyDialog(BuildContext context, bool dogrumu) async {
   return showDialog<void>(
